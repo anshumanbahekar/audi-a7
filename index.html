@@ -1,0 +1,462 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+@keyframes revealDark{0%{opacity:1}100%{opacity:0;pointer-events:none}}
+@keyframes hPulse{0%,100%{opacity:.85}50%{opacity:1}}
+@keyframes glowBreath{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
+@keyframes rainDrop{0%{transform:translateY(-30px);opacity:0}10%{opacity:1}100%{transform:translateY(600px);opacity:0}}
+@keyframes scanMove{0%{top:-80px}100%{top:120%}}
+@keyframes logoGlow{0%,100%{opacity:.7}50%{opacity:1}}
+@keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes flicker{0%,94%,100%{opacity:1}95%,97%{opacity:.5}}
+@keyframes rimPulse{0%,100%{box-shadow:0 0 6px 1px rgba(88,174,255,.25)}50%{box-shadow:0 0 18px 5px rgba(88,174,255,.6)}}
+@keyframes floatCar{0%,100%{transform:translateY(0px)}50%{transform:translateY(-5px)}}
+@keyframes beamOn{from{opacity:0}to{opacity:1}}
+@keyframes roadRush{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes speedLine{from{transform:translateX(120%);opacity:.6}to{transform:translateX(-120%);opacity:0}}
+@keyframes exhaustPuff{0%{transform:translateY(0) scale(1);opacity:.5}100%{transform:translateY(-25px) scale(2.5);opacity:0}}
+@keyframes tireRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes holoPulse{0%,100%{opacity:.4;transform:scaleY(1)}50%{opacity:.9;transform:scaleY(1.02)}}
+@keyframes neonTrace{0%{stroke-dashoffset:1000}100%{stroke-dashoffset:0}}
+@keyframes countUp{from{opacity:0}to{opacity:1}}
+@keyframes ambientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes popIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+
+body{background:#000;min-height:100vh;display:flex;justify-content:center;align-items:center;font-family:var(--font-sans,sans-serif)}
+
+.masterScene{width:100%;max-width:740px;position:relative;background:#000;border-radius:20px;overflow:hidden;padding:0 0 8px}
+
+.skyBg{position:absolute;inset:0;background:radial-gradient(ellipse 110% 70% at 50% 100%,#050d1a 0%,#000 60%);z-index:0}
+.cityBg{position:absolute;bottom:38%;left:0;right:0;height:120px;z-index:1;opacity:.08}
+
+.rainLayer{position:absolute;inset:0;pointer-events:none;z-index:2;overflow:hidden}
+.rd{position:absolute;border-radius:1px;animation:rainDrop linear infinite}
+
+.roadWrap{position:absolute;bottom:0;left:0;right:0;height:52px;z-index:4;overflow:hidden}
+.roadSurface{position:absolute;inset:0;background:linear-gradient(to top,#0b1020,#070c18)}
+.roadLines{position:absolute;top:0;left:0;width:200%;height:100%;display:flex;align-items:center;animation:roadRush 1.2s linear infinite;gap:0}
+.rl{height:2px;width:8%;background:linear-gradient(to right,transparent,rgba(88,174,255,.12),transparent);flex-shrink:0;margin-right:8%}
+.roadGlow{position:absolute;bottom:0;left:0;right:0;height:30px;background:radial-gradient(ellipse at 50% 100%,rgba(88,174,255,.13),transparent 70%)}
+
+.speedLines{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+.sl{position:absolute;height:1px;background:linear-gradient(to right,transparent,rgba(88,174,255,.15),transparent);animation:speedLine linear infinite}
+
+.scan{position:absolute;left:0;right:0;height:80px;background:linear-gradient(transparent,rgba(88,174,255,.035),transparent);animation:scanMove 3.5s linear infinite;pointer-events:none;z-index:60}
+
+.carStage{width:88%;max-width:580px;margin:24px auto 0;position:relative;animation:floatCar 5s ease-in-out infinite;z-index:10}
+
+.exhaustL,.exhaustR{position:absolute;bottom:-2%;width:18px;height:18px;border-radius:50%;z-index:1}
+.exhaustL{left:13%}
+.exhaustR{right:13%}
+.puff{position:absolute;width:100%;height:100%;border-radius:50%;background:rgba(88,174,255,.08);animation:exhaustPuff 1.8s ease-out infinite}
+.puff:nth-child(2){animation-delay:.6s}
+.puff:nth-child(3){animation-delay:1.2s}
+
+.wheelL,.wheelR{position:absolute;bottom:-3%;width:10%;aspect-ratio:1;z-index:2}
+.wheelL{left:12%}
+.wheelR{right:12%}
+.wheelRim{width:100%;height:100%;border-radius:50%;border:1.5px solid rgba(88,174,255,.3);background:radial-gradient(#111,#000);overflow:hidden}
+.wheelSpoke{position:absolute;width:100%;height:100%;border-radius:50%}
+.wheelSpoke::before{content:"";position:absolute;width:2px;height:48%;background:rgba(88,174,255,.5);left:50%;top:2%;transform:translateX(-50%)}
+.wheelSpoke::after{content:"";position:absolute;width:2px;height:48%;background:rgba(88,174,255,.5);left:50%;bottom:2%;transform:translateX(-50%)}
+.wheelSpoke2{position:absolute;width:100%;height:100%;border-radius:50%;transform:rotate(60deg)}
+.wheelSpoke2::before{content:"";position:absolute;width:2px;height:48%;background:rgba(88,174,255,.5);left:50%;top:2%;transform:translateX(-50%)}
+.wheelSpoke2::after{content:"";position:absolute;width:2px;height:48%;background:rgba(88,174,255,.5);left:50%;bottom:2%;transform:translateX(-50%)}
+.wheelSpoke3{position:absolute;width:100%;height:100%;border-radius:50%;transform:rotate(120deg)}
+.wheelSpoke3::before{content:"";position:absolute;width:2px;height:48%;background:rgba(88,174,255,.5);left:50%;top:2%;transform:translateX(-50%)}
+.wheelSpoke3::after{content:"";position:absolute;width:2px;height:48%;background:rgba(88,174,255,.5);left:50%;bottom:2%;transform:translateX(-50%)}
+.wheelCenter{position:absolute;width:28%;height:28%;border-radius:50%;background:radial-gradient(rgba(88,174,255,.6),rgba(88,174,255,.1));top:50%;left:50%;transform:translate(-50%,-50%)}
+
+.canvas{width:100%;aspect-ratio:1.5/1;position:relative;display:flex;justify-content:center;align-items:center}
+.canvas *{position:absolute}
+.carAmbient{width:92%;height:85%;border-radius:50%;background:radial-gradient(ellipse at 50% 78%,rgba(88,174,255,.07),transparent 65%);top:5%;left:4%;animation:glowBreath 4s ease-in-out infinite}
+.beamL,.beamR{width:40%;height:58%;top:46%;z-index:0;pointer-events:none;animation:beamOn .9s 1.9s ease forwards;opacity:0;filter:blur(5px)}
+.beamL{left:-7%;background:conic-gradient(from 7deg at 98% 7%,transparent 0deg,rgba(88,174,255,.04) 16deg,rgba(88,174,255,.13) 28deg,rgba(88,174,255,.05) 46deg,transparent 60deg);clip-path:polygon(100% 0%,0% 88%,72% 100%)}
+.beamR{right:-7%;background:conic-gradient(from 173deg at 2% 7%,transparent 110deg,rgba(88,174,255,.04) 134deg,rgba(88,174,255,.13) 152deg,rgba(88,174,255,.05) 163deg,transparent 178deg);clip-path:polygon(0% 0%,100% 88%,28% 100%)}
+
+.dark{height:100%;width:100%;background:#000;z-index:90;border-radius:12px;animation:revealDark 1.1s .4s ease forwards}
+.window{height:26%;width:60%;top:13%}
+.wft{height:28%;width:86%;border-radius:100%;border-top:1px solid rgba(88,174,255,.6);left:50%;top:-6%;transform:translateX(-50%);box-shadow:0 -3px 16px rgba(88,174,255,.22)}
+.wfl{height:100%;width:30%;top:10%;left:-7%;overflow:hidden}
+.wfl::after{content:"";position:absolute;height:310%;width:100%;border-left:1px solid rgba(255,255,255,.58);border-radius:100%;transform:rotate(25deg);top:-85%;left:15%}
+.wfr{height:100%;width:30%;top:10%;right:-7%;overflow:hidden}
+.wfr::after{content:"";position:absolute;height:310%;width:100%;border-right:1px solid rgba(255,255,255,.58);border-radius:100%;transform:rotate(-25deg);top:-90%;right:15%}
+.wg{height:78%;width:79%;top:9%;left:10.5%;background:linear-gradient(140deg,rgba(88,174,255,.1) 0%,rgba(0,20,60,.48) 55%,rgba(0,0,0,.78) 100%);border-radius:3px;overflow:hidden}
+.wg::before{content:"";position:absolute;width:35%;height:45%;top:6%;left:6%;background:linear-gradient(135deg,rgba(255,255,255,.17),transparent);border-radius:2px}
+.wg::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 97%,rgba(88,174,255,.04) 100%)}
+.wfb{height:14%;width:100%;background:linear-gradient(to right,rgba(255,255,255,.58),rgba(88,174,255,.38),rgba(255,255,255,.58));left:50%;transform:translateX(-50%);bottom:-20%;border-radius:50% 50% 0 0}
+.wfb::after{content:"";position:absolute;background:#000;height:200%;width:100%;top:4%;border-radius:100%}
+.roofStrip{height:2px;width:68%;background:linear-gradient(to right,transparent,rgba(88,174,255,.75) 30%,rgba(255,255,255,1) 50%,rgba(88,174,255,.75) 70%,transparent);top:10.5%;left:16%;box-shadow:0 0 12px rgba(88,174,255,.55);animation:flicker 7s ease-in-out infinite}
+
+.bottom{height:50%;width:90%;top:41%;border-radius:30%}
+.bottom::after{content:"";position:absolute;height:30%;width:96.6%;background:linear-gradient(to right,rgba(88,174,255,.07),rgba(0,0,0,.92),rgba(88,174,255,.07));left:50%;transform:translateX(-50%);top:22%;border-radius:0 0 20% 20%}
+.btt{height:5%;width:16%;top:10%}
+.btl{transform:rotate(-25deg);left:1%}
+.btl::after{content:"";position:absolute;height:100%;width:100%;clip-path:polygon(0 40%,100% 0,100% 100%,0 60%);background:#fff}
+.btl .a1{height:90%;width:45%;background:#000;border-radius:100%;z-index:2;top:58%;left:0}
+.btl .a2{height:60%;width:55%;background:#fff;border-radius:100%;z-index:1;top:45%;right:0}
+.btl .a3{height:60%;width:45%;background:#fff;border-radius:100%;z-index:1;top:15%;left:0}
+.btl .a4{height:80%;width:55%;background:#000;border-radius:100%;z-index:1;top:-40%;right:-1%;transform:rotate(-5deg)}
+.btr{transform:rotate(25deg);right:1%}
+.btr::after{content:"";position:absolute;height:100%;width:100%;clip-path:polygon(0 0,100% 40%,100% 60%,0 100%);background:#fff}
+.btr .a1{height:90%;width:45%;background:#000;border-radius:100%;z-index:3;top:58%;right:0}
+.btr .a2{height:60%;width:55%;background:#fff;border-radius:100%;z-index:1;top:45%;left:0}
+.btr .a3{height:60%;width:45%;background:#fff;border-radius:100%;z-index:3;top:5%;right:0}
+.btr .a4{height:80%;width:55%;background:#000;border-radius:100%;z-index:1;top:-40%;left:-1%;transform:rotate(5deg)}
+
+.lt{height:17%;width:19%;top:32%;overflow:hidden;transform:rotate(5deg);transform-origin:left center}
+.ll{left:3%}
+.lr{right:-16%;transform:rotateY(180deg) rotate(5deg)}
+.tl{width:100%;height:10%;background:linear-gradient(to right,rgba(255,255,255,.5),#fff,rgba(255,255,255,.5));box-shadow:0 0 8px rgba(88,174,255,.6)}
+.sl2{height:60%;width:4%;background:#fff;right:-2%;transform:rotate(45deg);transform-origin:top center}
+.bl{height:10%;width:40%;background:#fff;top:35%;right:13%;transform:rotate(-7deg);transform-origin:right center}
+.it{height:110%;width:100%;background:repeating-linear-gradient(-80deg,#000 2%,#000 6%,rgba(88,174,255,.92) 8%);clip-path:polygon(9.93% 44.36%,0px -8%,113.92% -1%);top:10%;filter:blur(.5px);z-index:-1}
+.bulb{height:45%;width:32%;background:radial-gradient(ellipse,#fff 0%,rgba(88,174,255,.95) 45%,transparent 100%);clip-path:polygon(0 0,100% 0,54% 100%,10% 100%);border-radius:0 0 100% 100%;left:10%;top:-1%;filter:blur(1px);animation:hPulse 2.5s ease-in-out infinite}
+.drl{height:6%;width:90%;top:-8%;left:5%;background:linear-gradient(to right,transparent 5%,rgba(88,174,255,.65) 20%,rgba(255,255,255,.95) 50%,rgba(88,174,255,.65) 80%,transparent 95%);border-radius:2px;box-shadow:0 0 8px rgba(88,174,255,.5);animation:flicker 8s ease-in-out infinite}
+.be{height:100%;width:50%;bottom:0}
+.ber{background:#fff;height:10%;width:54%;bottom:40%;left:42%;transform:rotate(-29deg);transform-origin:right center}
+.beb{height:15%;width:32%;background:#fff;bottom:0;left:18%;clip-path:polygon(0 0,100% 10%,100% 80%,0% 100%)}
+.bel{height:15%;width:50%;background:#fff;bottom:-5%;left:-31%;transform:rotate(66deg);transform-origin:right center;clip-path:polygon(0 10%,100% 0,100% 100%,0 90%);border-radius:30%}
+
+.grl{height:70%;width:52%;z-index:1;top:28%;left:50%;transform:translate(-50%)}
+.sh{height:8%;background:linear-gradient(#000,#111)}
+.shm{width:77%;left:50%;transform:translate(-50%);top:-5%}
+.shl{width:14%;transform:rotate(-45deg);transform-origin:bottom left;top:15%;left:2%}
+.shr{width:14%;transform:rotate(45deg);transform-origin:bottom right;top:14%;right:2%;z-index:4}
+.gb{height:100%;width:95%;background:linear-gradient(to bottom,#2a2a2a,#777,#0a0a0a 85%);clip-path:polygon(10% 0,90% 0,100% 20%,90% 84%,90% 100%,10% 100%,10% 83%,0% 20%);border-radius:33px;display:flex;justify-content:center;align-items:center;top:5%;left:50%;transform:translateX(-50%)}
+.gb::before{height:100%;width:100%;background:linear-gradient(rgba(88,174,255,.07),rgba(0,0,0,.9));content:"";position:absolute;z-index:8}
+.gb::after{height:100%;width:100%;background:#000;content:"";position:absolute;transform:scale(.988);border-radius:33px;clip-path:polygon(10% 0,90% 0,100% 20%,90% 84%,90% 100%,10% 100%,10% 83%,0% 20%)}
+.ln{height:2%;width:80%;background:linear-gradient(to right,transparent,rgba(88,174,255,.5),rgba(255,255,255,.85),rgba(88,174,255,.5),transparent);z-index:1}
+.l1{top:11%;width:72%}.l2{top:22%}.l3{width:78%;top:33%}.l4{width:76%;top:44%}.l5{height:1.9%;width:72%;top:55%}.l6{height:1%;width:65%;top:66%}.l7{height:3%;width:60%;background:transparent;border-top:1px solid rgba(88,174,255,.2);border-bottom:1px solid rgba(88,174,255,.2);bottom:7%}
+.l1::after,.l2::after,.l3::after,.l4::after,.l5::after{height:120%;width:15%;content:"";position:absolute;border:1px solid rgba(88,174,255,.4);border-radius:100%;right:-15%;top:-60%}
+.l1::before,.l2::before,.l3::before,.l4::before,.l5::before{height:120%;width:15%;content:"";position:absolute;border:1px solid rgba(88,174,255,.4);border-radius:100%;top:-60%;left:-15%}
+.al{height:22%;width:32%;background:#000;z-index:9;top:9%}
+.al::after{content:"";position:absolute;height:100%;width:100%;background:linear-gradient(rgba(0,0,0,.9),rgba(0,0,0,0),rgba(0,0,0,.9));top:-8%}
+.ci{width:32%;aspect-ratio:1;background:transparent;outline:1.5px solid rgba(255,255,255,.93);border-radius:100%;box-shadow:0 0 5px rgba(88,174,255,.55),inset 0 0 5px rgba(88,174,255,.1)}
+.c2{left:22%}.c3{left:44%}.c4{left:66%}
+
+.gs{height:120%;width:38%;z-index:4}
+.gsl{left:-28%}.gsr{right:-28%}
+.ol1{height:40%;width:1%;background:linear-gradient(to bottom,rgba(88,174,255,.7),#fff,rgba(88,174,255,.3));top:20%}
+.ol1::after{content:"";position:absolute;height:25%;width:1400%;background:linear-gradient(#000,rgba(88,174,255,.35));clip-path:polygon(0 0,100% 15%,100% 58%,0% 100%)}
+.lol1{right:35%;transform-origin:top center;transform:rotate(-17deg)}
+.rol1{left:35%;transform-origin:top center;transform:rotate(17deg)}
+.rol1::after{right:0}
+.ol2{height:25%;width:1%;background:linear-gradient(to bottom,rgba(255,255,255,.8),rgba(88,174,255,.4));top:35%}
+.lol2{right:34%;transform-origin:top center;transform:rotate(-25deg)}
+.rol2{left:34%;transform-origin:top center;transform:rotate(25deg)}
+.scb{height:6%;width:70%;top:33%}
+.lscb{clip-path:polygon(0 0,93% 0%,100% 100%,0% 100%);left:2%;transform:rotate(5deg)}
+.sc{height:150%;width:200%;background:radial-gradient(ellipse,rgba(255,255,255,.9),rgba(88,174,255,.4));border-radius:100%;top:-75%}
+.rscb{clip-path:polygon(7% 0,100% 0%,100% 100%,0% 100%);right:1%;transform:rotate(-5deg)}
+.rsc{right:0}
+.bcb{height:12%;width:80%;bottom:10%;overflow:hidden}
+.bcb::after{content:"";position:absolute;height:90%;width:150%;background:linear-gradient(rgba(88,174,255,.28) 20%,rgba(255,255,255,.1),rgba(20,20,30,.4));border-radius:50%;top:-30%}
+.bcrb{transform:rotate(-7deg)}.bcrb::after{transform:rotateY(180deg);left:0}
+.bclb::after{right:0}.bclb{transform:rotate(7deg);right:0}
+.mi{height:11%;width:100%;top:35%}
+.mir{height:100%;width:18%}
+.lm{left:3%}.rm{right:3%}
+.lm .tri{right:-24%;transform-origin:bottom left;transform:rotate(-37deg);clip-path:polygon(30% 13%,0 0,0 100%)}
+.rm .tri{left:4%;transform-origin:bottom left;transform:rotate(37deg) rotateY(180deg);clip-path:polygon(30% 13%,0 0,0 100%)}
+.tri{height:55%;width:27%;background:#07071a;border:1px solid rgba(88,174,255,.55);bottom:0}
+.mb{height:40%;border-color:transparent transparent rgba(88,174,255,.78) rgba(88,174,255,.78);border-style:solid;border-width:1px;width:50%;top:15%;transform:rotate(5deg);right:28%;border-radius:15px 20px 0 30px;animation:rimPulse 3s ease-in-out infinite}
+.mb::after{content:"";position:absolute;height:50%;width:25%;background:#000;top:59%;left:104%}
+.mb::before{content:"";position:absolute;height:50%;width:33%;top:-88%;left:45%;border-radius:50%;border:1px solid;border-color:grey rgba(88,174,255,.8) transparent transparent;transform:rotate(-6deg)}
+.rm .mb{transform:rotate(-5deg) rotateY(180deg);right:20%}
+.ref{height:100%;width:100%;background:linear-gradient(#000,rgba(0,0,92,.65));border-radius:100%}
+.glo{z-index:5;height:45%;width:23%;background:radial-gradient(#fff 4%,rgba(88,174,255,.95) 22%,rgba(0,0,172,.6) 52%,transparent 88%);top:16%;border-radius:100%;transform:scale(1.1);filter:blur(11px);animation:glowBreath 2.8s ease-in-out infinite}
+.lg{left:-3%}.rg{right:-3%}
+.shd{height:60%;width:7%;background:rgba(0,0,0,.65);z-index:10;border-radius:40px;top:19%}
+.sl3{left:8%;transform:rotate(-15deg)}.sr{right:8%;transform:rotate(15deg)}
+.underGlow{position:absolute;bottom:-6px;left:6%;right:6%;height:10px;background:radial-gradient(ellipse at 50% 0%,rgba(88,174,255,.2),transparent 70%);border-radius:50%;filter:blur(4px)}
+
+.hud{position:absolute;inset:0;pointer-events:none;z-index:5}
+.htl,.htr,.hbl,.hbr{position:absolute;width:24px;height:24px;opacity:.4}
+.htl{top:8px;left:8px;border-top:1px solid rgba(88,174,255,.9);border-left:1px solid rgba(88,174,255,.9)}
+.htr{top:8px;right:8px;border-top:1px solid rgba(88,174,255,.9);border-right:1px solid rgba(88,174,255,.9)}
+.hbl{bottom:8px;left:8px;border-bottom:1px solid rgba(88,174,255,.9);border-left:1px solid rgba(88,174,255,.9)}
+.hbr{bottom:8px;right:8px;border-bottom:1px solid rgba(88,174,255,.9);border-right:1px solid rgba(88,174,255,.9)}
+
+.holoHUD{position:relative;z-index:20;margin:0 auto;width:88%;max-width:580px;padding:10px 0 0;animation:slideUp .8s 2.4s ease both}
+.holoRow{display:flex;justify-content:space-between;align-items:stretch;gap:8px;margin-bottom:8px}
+.holoCard{flex:1;background:rgba(88,174,255,.04);border:1px solid rgba(88,174,255,.14);border-radius:8px;padding:8px 10px;position:relative;overflow:hidden}
+.holoCard::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(88,174,255,.5),transparent)}
+.holoCard::after{content:"";position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(transparent,rgba(88,174,255,.04))}
+.hLabel{font-size:9px;letter-spacing:.14em;color:rgba(88,174,255,.45);text-transform:uppercase;margin-bottom:3px}
+.hVal{font-size:18px;font-weight:500;color:rgba(88,174,255,.9);letter-spacing:.04em;line-height:1;animation:logoGlow 3s ease-in-out infinite}
+.hUnit{font-size:9px;color:rgba(88,174,255,.4);margin-left:2px;letter-spacing:.08em}
+.hBar{height:2px;background:rgba(88,174,255,.12);border-radius:1px;margin-top:5px;overflow:hidden}
+.hBarFill{height:100%;border-radius:1px;background:linear-gradient(to right,rgba(88,174,255,.3),rgba(88,174,255,.9));transition:width .6s ease}
+
+.rpmGauge{width:72px;height:72px;position:relative;margin:0 auto}
+.rpmSvg{width:100%;height:100%}
+
+.modelBadge{display:flex;justify-content:space-between;align-items:center;padding:0 2px;margin-bottom:8px;animation:slideUp .8s 2.7s ease both}
+.mName{font-size:12px;letter-spacing:.2em;color:rgba(255,255,255,.2);text-transform:uppercase}
+.mName span{color:rgba(88,174,255,.7);font-weight:500}
+.mYear{font-size:10px;color:rgba(88,174,255,.3);letter-spacing:.15em}
+
+.colorRow{display:flex;align-items:center;gap:8px;animation:slideUp .8s 3s ease both;padding:0 2px}
+.cLabel{font-size:9px;letter-spacing:.12em;color:rgba(255,255,255,.2);text-transform:uppercase;flex:1}
+.dots{display:flex;gap:7px}
+.dot{width:14px;height:14px;border-radius:50%;cursor:pointer;border:1.5px solid transparent;transition:all .2s;flex-shrink:0}
+.dot:hover,.dot.on{border-color:rgba(255,255,255,.6);transform:scale(1.3)}
+.dot[data-c=blue]{background:radial-gradient(#58aeff,#0a2a5e)}
+.dot[data-c=red]{background:radial-gradient(#ff4444,#5e0a0a)}
+.dot[data-c=green]{background:radial-gradient(#44ff88,#0a3e1a)}
+.dot[data-c=white]{background:radial-gradient(#fff,#bbb)}
+.dot[data-c=gold]{background:radial-gradient(#ffd700,#7a5a00)}
+.dot[data-c=purple]{background:radial-gradient(#cc88ff,#3a0a6e)}
+.dot[data-c=orange]{background:radial-gradient(#ff8844,#6e2a0a)}
+
+.modeRow{display:flex;gap:6px;margin-top:8px;animation:slideUp .8s 3.2s ease both}
+.modeBtn{flex:1;padding:6px 4px;background:rgba(88,174,255,.04);border:1px solid rgba(88,174,255,.14);border-radius:6px;font-size:9px;letter-spacing:.12em;color:rgba(88,174,255,.45);text-transform:uppercase;cursor:pointer;transition:all .25s;text-align:center}
+.modeBtn:hover,.modeBtn.on{background:rgba(88,174,255,.1);border-color:rgba(88,174,255,.4);color:rgba(88,174,255,.9)}
+
+.vignette{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 30%,rgba(0,0,0,.6) 100%);pointer-events:none;z-index:110;border-radius:20px}
+</style>
+
+<div class="masterScene">
+  <div class="skyBg"></div>
+  <div class="rainLayer" id="rl"></div>
+  <div class="speedLines" id="spd"></div>
+  <div class="scan"></div>
+  <div class="hud"><div class="htl"></div><div class="htr"></div><div class="hbl"></div><div class="hbr"></div></div>
+  <div class="vignette"></div>
+
+  <div class="roadWrap">
+    <div class="roadSurface"></div>
+    <div class="roadLines" id="rlines"></div>
+    <div class="roadGlow"></div>
+  </div>
+
+  <div class="carStage" id="carStage">
+    <div class="exhaustL"><div class="puff"></div><div class="puff"></div><div class="puff"></div></div>
+    <div class="exhaustR"><div class="puff"></div><div class="puff"></div><div class="puff"></div></div>
+    <div class="wheelL"><div class="wheelRim" id="wl"><div class="wheelSpoke" id="wsL"></div><div class="wheelSpoke2"></div><div class="wheelSpoke3"></div><div class="wheelCenter"></div></div></div>
+    <div class="wheelR"><div class="wheelRim" id="wr"><div class="wheelSpoke" id="wsR"></div><div class="wheelSpoke2"></div><div class="wheelSpoke3"></div><div class="wheelCenter"></div></div></div>
+
+    <div class="canvas">
+      <div class="carAmbient"></div>
+      <div class="beamL"></div><div class="beamR"></div>
+      <div class="dark"></div>
+      <div class="window">
+        <div class="wft"></div><div class="wfl"></div><div class="wfr"></div><div class="wg"></div><div class="wfb"></div>
+      </div>
+      <div class="roofStrip"></div>
+      <div class="bottom">
+        <div class="lg glo"></div><div class="rg glo"></div>
+        <div class="btl btt"><div class="a1"></div><div class="a2"></div><div class="a3"></div><div class="a4"></div></div>
+        <div class="btr btt"><div class="a1"></div><div class="a2"></div><div class="a3"></div><div class="a4"></div></div>
+        <div class="ll lt">
+          <div class="drl"></div><div class="tl"></div><div class="sl2"></div><div class="bl"></div><div class="it"></div><div class="bulb"></div>
+          <div class="be"><div class="bel"></div><div class="beb"></div><div class="ber"></div></div>
+        </div>
+        <div class="lr lt">
+          <div class="drl"></div><div class="tl"></div><div class="sl2"></div><div class="bl"></div><div class="it"></div><div class="bulb"></div>
+          <div class="be"><div class="bel"></div><div class="beb"></div><div class="ber"></div></div>
+        </div>
+        <div class="grl">
+          <div class="shm sh"></div><div class="shl sh"></div><div class="shr sh"></div>
+          <div class="shd sl3"></div><div class="shd sr"></div>
+          <div class="gb">
+            <div class="l1 ln"></div><div class="l2 ln"></div><div class="l3 ln"></div><div class="l4 ln"></div><div class="l5 ln"></div><div class="l6 ln"></div><div class="l7 ln"></div>
+            <div class="al"><div class="ci"></div><div class="ci c2"></div><div class="ci c3"></div><div class="ci c4"></div></div>
+          </div>
+          <div class="gs gsl">
+            <div class="ol1 lol1"></div><div class="ol2 lol2"></div>
+            <div class="scb lscb"><div class="sc"></div></div>
+            <div class="bcb bclb"></div>
+          </div>
+          <div class="gs gsr">
+            <div class="ol1 rol1"></div><div class="ol2 rol2"></div>
+            <div class="scb rscb"><div class="sc rsc"></div></div>
+            <div class="bcb bcrb"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mi">
+        <div class="mir lm"><div class="tri"></div><div class="mb"><div class="ref"></div></div></div>
+        <div class="mir rm"><div class="tri"></div><div class="mb"><div class="ref"></div></div></div>
+      </div>
+      <div class="underGlow"></div>
+    </div>
+  </div>
+
+  <div class="holoHUD">
+    <div class="modelBadge">
+      <div class="mName">Audi <span>A7</span> Sportback &nbsp;·&nbsp; RS Performance</div>
+      <div class="mYear">2025 · Edition One</div>
+    </div>
+
+    <div class="holoRow">
+      <div class="holoCard">
+        <div class="hLabel">Speed</div>
+        <div class="hVal" id="speedVal">0<span class="hUnit">km/h</span></div>
+        <div class="hBar"><div class="hBarFill" id="speedBar" style="width:0%"></div></div>
+      </div>
+      <div class="holoCard">
+        <div class="hLabel">Power</div>
+        <div class="hVal">450<span class="hUnit">hp</span></div>
+        <div class="hBar"><div class="hBarFill" style="width:90%"></div></div>
+      </div>
+      <div class="holoCard">
+        <div class="hLabel">Torque</div>
+        <div class="hVal">600<span class="hUnit">nm</span></div>
+        <div class="hBar"><div class="hBarFill" style="width:80%"></div></div>
+      </div>
+      <div class="holoCard">
+        <div class="hLabel">0–100</div>
+        <div class="hVal">4.5<span class="hUnit">sec</span></div>
+        <div class="hBar"><div class="hBarFill" style="width:55%"></div></div>
+      </div>
+    </div>
+
+    <div class="holoRow">
+      <div class="holoCard" style="flex:2">
+        <div class="hLabel">RPM</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="rpmGauge">
+            <svg class="rpmSvg" viewBox="0 0 72 72"><circle cx="36" cy="36" r="28" fill="none" stroke="rgba(88,174,255,.1)" stroke-width="4"/><circle id="rpmArc" cx="36" cy="36" r="28" fill="none" stroke="rgba(88,174,255,.7)" stroke-width="4" stroke-dasharray="176" stroke-dashoffset="176" stroke-linecap="round" transform="rotate(-90 36 36)" style="transition:stroke-dashoffset .4s ease"/><text x="36" y="40" text-anchor="middle" fill="rgba(88,174,255,.9)" font-size="12" font-family="sans-serif" id="rpmText">0</text></svg>
+          </div>
+          <div style="flex:1">
+            <div class="hBar" style="margin-bottom:4px"><div class="hBarFill" id="rpmBar" style="width:0%"></div></div>
+            <div style="font-size:9px;color:rgba(88,174,255,.35);letter-spacing:.1em;text-transform:uppercase">Max 7200 rpm</div>
+          </div>
+        </div>
+      </div>
+      <div class="holoCard" style="flex:1">
+        <div class="hLabel">Fuel</div>
+        <div class="hVal" id="fuelVal">98<span class="hUnit">%</span></div>
+        <div class="hBar"><div class="hBarFill" id="fuelBar" style="width:98%"></div></div>
+      </div>
+      <div class="holoCard" style="flex:1">
+        <div class="hLabel">Temp</div>
+        <div class="hVal">92<span class="hUnit">°C</span></div>
+        <div class="hBar"><div class="hBarFill" style="width:46%;background:linear-gradient(to right,rgba(88,174,255,.3),rgba(255,150,50,.7))"></div></div>
+      </div>
+    </div>
+
+    <div class="colorRow">
+      <div class="cLabel">Accent color</div>
+      <div class="dots" id="dots">
+        <div class="dot on" data-c="blue"></div>
+        <div class="dot" data-c="red"></div>
+        <div class="dot" data-c="green"></div>
+        <div class="dot" data-c="white"></div>
+        <div class="dot" data-c="gold"></div>
+        <div class="dot" data-c="purple"></div>
+        <div class="dot" data-c="orange"></div>
+      </div>
+    </div>
+
+    <div class="modeRow" id="modeRow">
+      <div class="modeBtn on" data-m="sport">Sport</div>
+      <div class="modeBtn" data-m="comfort">Comfort</div>
+      <div class="modeBtn" data-m="dynamic">Dynamic</div>
+      <div class="modeBtn" data-m="eco">Eco</div>
+      <div class="modeBtn" data-m="offroad">Offroad</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const rl=document.getElementById('rl');
+for(let i=0;i<65;i++){
+  const d=document.createElement('div');d.className='rd';
+  const dur=.5+Math.random()*1.2,h=15+Math.random()*55;
+  d.style.cssText=`left:${Math.random()*100}%;height:${h}px;width:${.5+Math.random()*.9}px;background:linear-gradient(to bottom,transparent,rgba(88,174,255,${.1+Math.random()*.2}),transparent);animation-duration:${dur}s;animation-delay:${Math.random()*2}s;animation-name:rainDrop;animation-timing-function:linear;animation-iteration-count:infinite`;
+  rl.appendChild(d);
+}
+
+const spd=document.getElementById('spd');
+for(let i=0;i<12;i++){
+  const s=document.createElement('div');s.className='sl';
+  const w=60+Math.random()*140;
+  s.style.cssText=`width:${w}px;top:${Math.random()*100}%;left:${Math.random()*60+20}%;animation-duration:${.8+Math.random()*.8}s;animation-delay:${Math.random()*1.5}s;opacity:${.06+Math.random()*.1}`;
+  spd.appendChild(s);
+}
+
+const rlines=document.getElementById('rlines');
+for(let i=0;i<14;i++){
+  const r=document.createElement('div');r.className='rl';rlines.appendChild(r);
+}
+
+let animFrame,speed=0,rpm=0,targetSpeed=160,targetRpm=5200,running=true;
+function animDash(){
+  speed=speed+(targetSpeed-speed)*.025;
+  rpm=rpm+(targetRpm-rpm)*.025;
+  document.getElementById('speedVal').innerHTML=Math.round(speed)+'<span class="hUnit">km/h</span>';
+  document.getElementById('speedBar').style.width=(speed/250*100)+'%';
+  const rpmPct=rpm/7200;
+  document.getElementById('rpmBar').style.width=(rpmPct*100)+'%';
+  document.getElementById('rpmArc').style.strokeDashoffset=(176-(176*rpmPct));
+  document.getElementById('rpmText').textContent=Math.round(rpm/100)/10+'k';
+  if(running)requestAnimationFrame(animDash);
+}
+setTimeout(()=>animDash(),2200);
+
+let wheelAngle=0;
+function spinWheels(){
+  wheelAngle=(wheelAngle+3)%360;
+  ['wsL','wsR'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.style.transform=`rotate(${wheelAngle}deg)`;
+  });
+  requestAnimationFrame(spinWheels);
+}
+spinWheels();
+
+const colorMap={
+  blue:{g:'rgba(88,174,255,.95)',r:'rgba(88,174,255,.78)',s:'rgba(88,174,255,.9)'},
+  red:{g:'rgba(255,70,70,.9)',r:'rgba(255,70,70,.75)',s:'rgba(255,100,100,.9)'},
+  green:{g:'rgba(50,255,130,.85)',r:'rgba(50,255,130,.72)',s:'rgba(60,255,140,.9)'},
+  white:{g:'rgba(255,255,255,.85)',r:'rgba(255,255,255,.7)',s:'rgba(255,255,255,.9)'},
+  gold:{g:'rgba(255,210,60,.9)',r:'rgba(255,210,60,.75)',s:'rgba(255,218,80,.9)'},
+  purple:{g:'rgba(180,80,255,.88)',r:'rgba(180,80,255,.72)',s:'rgba(190,100,255,.9)'},
+  orange:{g:'rgba(255,140,50,.9)',r:'rgba(255,140,50,.75)',s:'rgba(255,160,70,.9)'}
+};
+
+function applyColor(c){
+  const p=colorMap[c];
+  document.querySelectorAll('.glo').forEach(el=>{el.style.background=`radial-gradient(#fff 4%,${p.g} 22%,rgba(0,0,172,.6) 52%,transparent 88%)`});
+  document.querySelectorAll('.mb').forEach(el=>{el.style.borderColor=`transparent transparent ${p.r} ${p.r}`});
+  document.querySelectorAll('.roofStrip,.wft,.drl').forEach(el=>{el.style.boxShadow=`0 0 12px ${p.r}`});
+  document.querySelectorAll('.ci').forEach(el=>{el.style.boxShadow=`0 0 5px ${p.r},inset 0 0 5px ${p.r.replace('.72','.1').replace('.75','.1').replace('.7','.1')}`});
+  document.querySelectorAll('.hVal,.hBarFill').forEach(el=>{el.style.color=p.s});
+  document.querySelectorAll('.hBarFill').forEach(el=>{if(!el.style.background.includes('gradient(to right,rgba(88'))el.style.background=`linear-gradient(to right,${p.r.replace('.78','.3').replace('.72','.3').replace('.75','.3').replace('.7','.3').replace('.88','.3').replace('.85','.3').replace('.9','.3')},${p.g})`});
+  document.getElementById('rpmArc').style.stroke=p.r;
+  document.getElementById('rpmText').style.fill=p.s;
+  document.querySelectorAll('.wheelCenter').forEach(el=>{el.style.background=`radial-gradient(${p.r},rgba(0,0,0,.5))`});
+  document.querySelectorAll('.wheelSpoke::before,.wheelSpoke::after').forEach(el=>{el.style.background=p.r});
+  document.querySelectorAll('.roadGlow,.underGlow').forEach(el=>{el.style.background=`radial-gradient(ellipse at 50% 0%,${p.r.replace('.78','.18').replace('.72','.16').replace('.75','.16').replace('.7','.16').replace('.88','.16').replace('.85','.15').replace('.9','.15')},transparent 70%)`});
+}
+
+document.getElementById('dots').addEventListener('click',e=>{
+  const dot=e.target.closest('.dot');if(!dot)return;
+  document.querySelectorAll('.dot').forEach(d=>d.classList.remove('on'));
+  dot.classList.add('on');applyColor(dot.dataset.c);
+});
+
+const modes={
+  sport:{speed:160,rpm:5200},
+  comfort:{speed:80,rpm:2800},
+  dynamic:{speed:220,rpm:6800},
+  eco:{speed:60,rpm:1800},
+  offroad:{speed:40,rpm:3200}
+};
+document.getElementById('modeRow').addEventListener('click',e=>{
+  const btn=e.target.closest('.modeBtn');if(!btn)return;
+  document.querySelectorAll('.modeBtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const m=modes[btn.dataset.m];
+  targetSpeed=m.speed;targetRpm=m.rpm;
+  const spd=document.getElementById('spd');
+  const intensity=m.speed/250;
+  spd.querySelectorAll('.sl').forEach(s=>{
+    s.style.animationDuration=((.8+Math.random()*.8)*(1-intensity*.5))+'s';
+    s.style.opacity=((.06+Math.random()*.1)*intensity*2);
+  });
+});
+</script>
